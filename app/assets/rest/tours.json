@@ -1,0 +1,38 @@
+[
+    {
+        "id": "1", 
+		"tourtype": "1", 
+		"duration": "1",
+        "imageUrl": "assets/img/tours/84bro.jpg", 
+		"price": "1500",
+        "name": "South Island", 
+        "snippet": "12 nights accommodation (Shared), All transport, (Coach bus, ferry boat crossing, Wellington - Picton - Wellington) 12 breaksfasts, 8 dinners, 7 activities "
+    }, 
+    {
+        "id": "2", 
+		"tourtype": "2", 
+		"duration": "3",
+        "imageUrl": "assets/img/tours/2bro.jpg", 
+		"price": "1400",
+        "name": "Bay of islands", 
+        "snippet": "Includes: 2 nights shared accommodation, 2 breakfasts, all transport, sightseeing i.e. Boiling mud, Geothermal activity, Green and Blue Lakes, Lake Rotorua, Government gardens"
+    }, 
+    {
+        "id": "3", 
+		"tourtype": "3", 
+		"duration": "3",
+        "imageUrl": "assets/img/tours/3bro.jpg", 
+		"price": "1100",
+        "name": "Coromandel Coast", 
+        "snippet": "Your Coromandel adventure begins at historical Coromandel Township once a gold-mining town in 1800s"
+    }, 
+    {
+        "id": "4", 
+		"tourtype": "1", 
+		"duration": "5",
+        "imageUrl": "assets/img/tours/1bro.jpg", 
+		"price": "15700",
+        "name": "Rotorua, Taupo, Waitomo", 
+        "snippet": "Rotorua is a unique blend of Maori culture and geothermal activity, making the city one of the most unique places that you will ever visit. New Zealand’s very first tourist destination!"
+    }
+]

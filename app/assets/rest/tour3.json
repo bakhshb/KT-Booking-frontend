@@ -1,0 +1,19 @@
+{
+    "id": "3", 
+	"name": "Coromandel Coast", 
+    "images": [
+		"img/tours/3bro.jpg",
+        "img/tours/headimage10.jpg", 
+        "img/tours/headimage11.jpg", 
+        "img/tours/headimage12.jpg", 
+        "img/tours/headimage20.jpg", 
+        "img/tours/headimage21.jpg"
+    ], 
+    "dates": [
+		"14 aug", 
+		"16 sep", 
+		"28 oct"
+	], 
+	"price": "100.00",
+    "description": "aasdals djasasdasdk jdasdljgfdf gsdklfghsdklfsdasghskdl hfskd fghksdlhf gasdaskdlhf gklsdhf gksdsdhf gskdlf ghskd fghskdlf gsdf"
+}

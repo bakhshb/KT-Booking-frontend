@@ -1,0 +1,67 @@
+<div class="row">
+
+	<div class="col-md-6 pull-right">
+		<h1>{{tour.name}}</h1>
+
+		<p class="tourDetailsPrice">From <span class="lead text-success">NZD${{tour.price}}</span> per person. <br />See dates for specials.</p>
+		
+		<p class="tourDetailsShortDesc">{{tour.description}}</p>
+		
+		<h3 class="text-primary">Book & Check Availability</h3>
+		
+		<div class="tourDetailsDates">
+<div class="row">
+        <div class="col-md-6">
+            <p class="input-group">
+              <select class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" >
+				<option value="0">Select a tour date</option>
+				<option value="8/10/2014">Wednesday, 8 Oct 2014</option>
+				<option value="11/10/2014">Monday, 11 Oct 2014</option>
+				<option value="17/10/2014">Wednesday, 17 Oct 2014</option>
+			  </select>
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+              </span>
+            </p>
+        </div>
+    </div>
+		</div>
+		<b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+		<button id="" name="" class="btn btn-primary" ng-click="cart.addItem(1, '{{tour.name}}', '{{tour.price}}', 1)">Begin Booking</button>
+	</div>
+
+	<div class="col-md-6 pull-left">
+		<div class="tourImages">
+			<div class="tourImg" ng-repeat="img in tour.images" ng-class="{active: mainImageUrl==img}">
+				<span class="vAlignHelper"></span><img ng-src="{{img}}" />
+			</div>
+		</div>
+		<div class="tourThumbs">
+			<ul>
+				<li ng-repeat="img in tour.images">
+					<img ng-src="{{img}}" ng-click="setImage(img)" />
+				</li>
+			</ul>
+		</div>
+		<div>
+			<button id="" name="" class="btn btn-primary">
+				<span class="glyphicon glyphicon-file"></span>Download Brochure
+			</button>
+		</div>
+	</div>
+
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<hr />
+		<h2>Full Description</h2>
+		<p>
+		University and inner city park, known as The Domain. Continue on through the picturesque suburb of Ponsonby, known for its historic buildings, before heading over the Harbour Bridge to the North Shore. Take a stroll on Narrow Neck Beach in historic Devonport before continuing up to the summit of Mt Victoria for panoramic views of Auckland city and the Harbour. Next you will visit the beautiful Viaduct Harbour and Westhaven Marina, one of the largest marinas in the Southern Hemisphere, before leaving the city behind and heading west to Kumeu Wine Country where you will enjoy wine tastings followed by lunch at a contemporary vineyard restaurant. Visit Muriwai’s gannet colony where a short walking track leads - See more at: http://www.kirratours.co.nz/all-deals/snapshots-tours/4-day-ultimate-geothermal-snapshots-2/#sthash.bSdopi67.dpuf
+		</p>
+		<h2>Tour Itinerary</h2>
+		<p>
+		University and inner city park, known as The Domain. Continue on through the picturesque suburb of Ponsonby, known for its historic buildings, before heading over the Harbour Bridge to the North Shore. Take a stroll on Narrow Neck Beach in historic Devonport before continuing up to the summit of Mt Victoria for panoramic views of Auckland city and the Harbour. Next you will visit the beautiful Viaduct Harbour and Westhaven Marina, one of the largest marinas in the Southern Hemisphere, before leaving the city behind and heading west to Kumeu Wine Country where you will enjoy wine tastings followed by lunch at a contemporary vineyard restaurant. Visit Muriwai’s gannet colony where a short walking track leads - See more at: http://www.kirratours.co.nz/all-deals/snapshots-tours/4-day-ultimate-geothermal-snapshots-2/#sthash.bSdopi67.dpuf
+		</p>
+	</div>
+</div>

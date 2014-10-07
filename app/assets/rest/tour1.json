@@ -1,0 +1,19 @@
+{
+    "id": "1", 
+	"name": "South Island", 
+    "images": [
+		"assets/img/tours/84bro.jpg",
+        "assets/img/tours/headimage10.jpg", 
+        "assets/img/tours/headimage11.jpg", 
+        "assets/img/tours/headimage12.jpg", 
+        "assets/img/tours/headimage20.jpg", 
+        "assets/img/tours/headimage21.jpg"
+    ], 
+    "dates": [
+		"12 aug", 
+		"15 sep", 
+		"22 oct"
+	], 
+	"price": "800.00",
+    "description": "Venture into the very heart of the beautiful North Island on this 4 day ultimate touring experience, bringing you deeper into the rich natural and cultural tapestry that embodies the lush Rotorua and Waikato regions."
+}
