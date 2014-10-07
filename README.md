@@ -4,10 +4,11 @@ Main website for Kiwianatours
 
 ### Setup ###
 
-run cmd
-npm install
-npm start
+* run cmd
+* npm install
+* npm start
 
+* run bower if somethings missing
 
 ### TODO ###
 
