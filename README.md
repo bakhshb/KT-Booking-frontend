@@ -2,6 +2,12 @@
 
 Main website for Kiwianatours 
 
+### Setup ###
+
+run cmd
+npm install
+npm start
+
 
 ### TODO ###
 
@@ -9,6 +15,7 @@ Main website for Kiwianatours
 * Cart
 * CMS?
 * Payment Gateway
+* Put grunt back in
 
 ### Contact ###
 
