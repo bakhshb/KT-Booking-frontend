@@ -13,7 +13,7 @@
 <div class="row">
         <div class="col-md-6">
             <p class="input-group">
-              <select class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" >
+              <select class="form-control" required datepicker-popup="{{format}}" ng-model="dt" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" >
 				<option value="0">Select a tour date</option>
 				<option value="8/10/2014">Wednesday, 8 Oct 2014</option>
 				<option value="11/10/2014">Monday, 11 Oct 2014</option>
@@ -27,7 +27,7 @@
     </div>
 		</div>
 		<b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
-		<button id="" name="" class="btn btn-primary" ng-click="cart.addItem(1, '{{tour.name}}', '{{tour.price}}', 1)">Begin Booking</button>
+		<button id="" name="" class="btn btn-primary" ng-click="addBooking()">Begin Booking</button>
 	</div>
 
 	<div class="col-md-6 pull-left">

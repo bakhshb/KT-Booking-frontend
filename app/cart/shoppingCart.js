@@ -57,10 +57,11 @@ shoppingCart.prototype.addItem = function (sku, name, price, quantity) {
             var item = this.items[i];
             if (item.sku == sku) {
                 found = true;
+				/*
                 item.quantity = this.toNumber(item.quantity + quantity);
                 if (item.quantity <= 0) {
                     this.items.splice(i, 1);
-                }
+                }*/
             }
         }
 

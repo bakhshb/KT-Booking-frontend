@@ -11,7 +11,7 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 }])
 
 
-.controller('ToursDetailsCtrl', ['$scope', '$routeParams', '$timeout', 'tours', 'DataService', function($scope, $routeParams, $timeout, tours, DataService) {
+.controller('ToursDetailsCtrl', ['$scope', '$routeParams', '$location', 'tours', 'DataService', function($scope, $routeParams, $location, tours, DataService) {
 
 	$scope.tour = tours.get({tourId: 'tour'+$routeParams.tourId}, function(tour) {
       $scope.mainImageUrl = tour.images[0];
@@ -19,9 +19,18 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 
     $scope.setImage = function(imageUrl) {
       $scope.mainImageUrl = imageUrl;
-    }
-
+    };
+	
+	
+	
 	$scope.cart = DataService.cart;
+
+	$scope.addBooking = function() {//tourID should be the tourBookingDateID likewise for price
+		DataService.cart.addItem($scope.tour.id, $scope.tour.name, $scope.tour.price, 1);
+		$location.path('/booking/tours');
+	};
+	
+	
 	
 
 	$scope.dt = 0;

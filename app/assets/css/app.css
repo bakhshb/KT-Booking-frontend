@@ -226,3 +226,39 @@ header>nav>.container-fluid {
 }
 
 
+
+
+
+/********** BOOKING CART ***********/
+
+.steps > div {
+	padding:10px;
+	border-radius:10px;
+}
+.steps > div:hover .stepName {
+	color: #ff0000;
+}
+.circle {
+	width:50px;
+	height:50px;
+	border-radius:50%;
+	font-size:20px;
+	color:#eee;
+	line-height:50px;
+	text-align:center;
+	background:#ccc
+}
+.stepName {
+	line-height:50px;
+	color: #ccc;
+}
+.currentStep  {
+	background:#eee;
+}
+.currentStep .circle  {
+	color: #fff;
+}
+.currentStep .stepName  {
+	color: #000;
+}
+

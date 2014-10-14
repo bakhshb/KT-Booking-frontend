@@ -1,5 +1,38 @@
 <div class="container-fluid">
-    <div class="row-fluid">
+
+<div class="row">
+	<div class="steps">
+		<div class="step1 col-md-3 currentStep">
+			<div class="circle col-md-4">1</div>
+			<!--<span class="tick col-md-1">&#10003;</span>-->
+			<span class="stepName col-md-7"><a href="#/booking/tours">Tours</a></span>
+		</div>
+		<div class="step2 col-md-3">
+			<div class="circle col-md-4">2</div>
+			<!--<span class="tick col-md-1">&#10003;</span>-->
+			<span class="stepName col-md-7">Passengers</span>
+		</div>
+		<div class="step3 col-md-3">
+			<div class="circle col-md-4">3</div>
+			<!--<span class="tick col-md-1">&#10003;</span>-->
+			<span class="stepName col-md-7">Payment</span>
+		</div>
+		<div class="step4 col-md-3">
+			<div class="circle col-md-4">4</div>
+			<!--<span class="tick col-md-1">&#10003;</span>-->
+			<span class="stepName col-md-7">Confirmation</span>
+		</div>
+	</div>
+</div>
+
+	
+<hr /> 
+
+
+    <div class="row">
+	
+		<h2>Tour dates</h2>
+	
         <div class="span8">
 
             <!-- items -->
@@ -7,8 +40,8 @@
 
                 <!-- header -->
                 <tr class="well">
-                    <td><b>Item</b></td>
-                    <td class="tdCenter"><b>Quantity</b></td>
+                    <td><b>Tour name</b></td>
+                    <td class="tdCenter">Departure date</td>
                     <td class="tdRight"><b>Price</b></td>
                     <td />
                 </tr>
@@ -24,34 +57,20 @@
                 <tr ng-repeat="item in cart.items | orderBy:'name'">
                     <td>{{item.name}}</td>
                     <td class="tdCenter">
-                      <div class="input-append">
-                        <!-- use type=tel instead of  to prevent spinners -->
-                        <input
-                            class="span3 text-center" type="tel" 
-                            ng-model="item.quantity" 
-                            ng-change="cart.saveItems()" />
-                        <button 
-                            class="btn btn-success" type="button" 
-                            ng-disabled="item.quantity >= 1000"
-                            ng-click="cart.addItem(item.sku, item.name, item.price, +1)">+</button>
-                        <button 
-                            class="btn btn-inverse" type="button" 
-                            ng-disabled="item.quantity <= 1"
-                            ng-click="cart.addItem(item.sku, item.name, item.price, -1)">-</button>
-                      </div>
+                      tour date here
                     </td>
                     <td class="tdRight">{{item.price * item.quantity | currency}}</td>
                     <td class="tdCenter" title="remove from cart">
                         <a href="" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
-                            <i class="icon-remove" />
+                            remove icon
                         </a>
                     </td>
                 </tr>
 
                 <!-- footer -->
                 <tr class="well">
-                    <td><b>Total</b></td>
-                    <td class="tdCenter"><b>{{cart.getTotalCount()}}</b></td>
+                    <td></td>
+                    <td class="text-right"><b>Total</b></td>
                     <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
                     <td />
                 </tr>
@@ -64,7 +83,7 @@
                 <button 
                     class="btn btn-block" 
                     onclick="window.location.href='default.htm'">
-                    <i class="icon-chevron-left" /> back to store
+                    <i class="icon-chevron-left" /> Book additional tours
                 </button>
                 <button 
                     class="btn btn-block btn-danger" 
@@ -75,46 +94,9 @@
             </p>
 
             <br /><br />
+			
+			<a href="#/booking/passengers">Continue booking</a>
 
-            <p class="text-info">
-                <button
-                    class="btn btn-block btn-primary"
-                    ng-click="cart.checkout('PayPal')"
-                    ng-disabled="cart.getTotalCount() < 1">
-                    <i class="icon-ok icon-white" /> check out using PayPal
-                </button>
-                <button 
-                    class="btn btn-block btn-primary" 
-                    ng-click="cart.checkout('Google')" 
-                    ng-disabled="cart.getTotalCount() < 1">
-                    <i class="icon-ok icon-white" /> check out using Google
-                </button>
-                <button 
-                    class="btn btn-block btn-primary" 
-                    ng-click="cart.checkout('Stripe')" 
-                    ng-disabled="cart.getTotalCount() < 1">
-                    <i class="icon-ok icon-white" /> check out using Stripe
-                </button>
-            </p>
-                <!-- Stripe needs a form to post to -->
-                <form class="form-stripe"></form>
-
-            <br /><br />
-
-            <p class="text-info">
-                <button 
-                    class="btn btn-block btn-link"
-                    ng-click="cart.checkout('PayPal')"
-                    ng-disabled="cart.getTotalCount() < 1" >
-                    <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
-                </button>    
-                <button 
-                    class="btn btn-block btn-link" 
-                    ng-click="cart.checkout('Google')" 
-                    ng-disabled="cart.getTotalCount() < 1" >
-                    <img src="https://checkout.google.com/buttons/checkout.gif?w=168&h=44&style=white&variant=text" alt="checkoutGoogle"/>
-                </button>    
-            </p>
         </div>
     </div>
 </div>

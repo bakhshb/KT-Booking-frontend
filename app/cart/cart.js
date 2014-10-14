@@ -4,9 +4,13 @@ angular.module('ktApp.cart', [])
 
 
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/cart', {
+    $routeProvider.when('/booking/tours', { 
 		templateUrl: 'cart/cart.html',
 		controller: 'CartCtrl'
+	})
+	.when('/booking/passengers', { 
+		templateUrl: 'cart/passengers.html',
+		controller: 'PassengerCtrl'
 	});
 }])
 
@@ -20,11 +24,63 @@ angular.module('ktApp.cart', [])
 }])
 
 
+.controller('PassengerCtrl', ['$scope', '$timeout', 'DataService', function($scope, $timeout, DataService) {
+
+	//$scope.cart = DataService.cart;
+	
+	$scope.passengers = [];
+	
+	$scope.passengers.push(new passenger($scope.passengers.length));
+	
+	var loadPassengers = function () {
+		var items = localStorage != null ? localStorage['ktbooking_passengers'] : null;
+		if (items != null && JSON != null) {
+			try {
+				var items = JSON.parse(items);
+				$scope.passengers = items;
+				console.log('PARSED: ' + items);
+			}
+			catch (err) {
+				console.log('ERROR: ' + err);
+			}
+		}
+	}
+	loadPassengers();
+	//localStorage['ktbooking_passengers'] = null;
+	
+	var savePassengers = function () {
+		console.log($scope.passengers);
+		if (localStorage != null && JSON != null) {
+			localStorage['ktbooking_passengers'] = JSON.stringify($scope.passengers);
+			console.log('SAVED: ' + JSON.stringify($scope.passengers));
+		}
+	}
+	
+	var timeout = null;
+	var waitSeconds = 2;
+	var throttleSavePassengers = function () {
+		if (timeout) {
+			$timeout.cancel(timeout)
+		}
+		timeout = $timeout(savePassengers, waitSeconds * 1000);  // 1000 = 1 second
+	}
+	
+	$scope.add = function () {
+		$scope.passengers.push(
+			new passenger($scope.passengers.length)
+		);
+	};
+	
+	$scope.$watch('passengers', throttleSavePassengers, true);
+	
+}])
+
+
 .factory("DataService", function () {
 
     //var myStore = new store();
 
-    var myCart = new shoppingCart("AngularStore");
+    var myCart = new shoppingCart("ktbooking_bookingdates");
 
     // enable PayPal checkout
     // https://www.paypal.com/webapps/mpp/merchant
@@ -43,18 +99,14 @@ angular.module('ktApp.cart', [])
         }
     );
 
-    // enable Stripe checkout
-    // note: the second parameter identifies your publishable key; in order to use the 
-    // https://manage.stripe.com/register
-    myCart.addCheckoutParameters("Stripe", "pk_test_xxxx",
-        {
-            chargeurl: "https://localhost:1234/processStripe.aspx"
-        }
-    );
-
-    // return data object with store and cart
     return {
-        //store: myStore,
         cart: myCart
     };
 });
+
+
+function passenger(id) {
+    this.id = id;
+    this.fname = '';
+	this.lname = '';
+}
