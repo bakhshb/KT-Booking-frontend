@@ -8,26 +8,44 @@
 		<p class="tourDetailsShortDesc">{{tour.description}}</p>
 		
 		<h3 class="text-primary">Book & Check Availability</h3>
+
+		<!-- BOOKING FORM START -->
+		<form name="bookDateForm" ng-submit="submitForm()" novalidate>
 		
 		<div class="tourDetailsDates">
-<div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-              <select class="form-control" required datepicker-popup="{{format}}" ng-model="dt" is-open="opened" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" >
-				<option value="0">Select a tour date</option>
-				<option value="8/10/2014">Wednesday, 8 Oct 2014</option>
-				<option value="11/10/2014">Monday, 11 Oct 2014</option>
-				<option value="17/10/2014">Wednesday, 17 Oct 2014</option>
-			  </select>
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
-    </div>
+			<div class="row">
+				<div class="col-md-6">
+					<span class="input-group" >
+						<select name="bookingDate" class="form-control"
+							ng-required="true" 
+							ng-model="bookdate" 
+							ng-options="o as (o | date:'d/MM/yyyy')  for o in test"
+							>
+							<option value="" >Choose a departure date</option>
+						</select>
+						
+						<span class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="openCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+						</span>
+					</span>
+					<input type="text" style="visibility:hidden;"
+						ng-model="dt"
+						datepicker-popup="{{format}}" 
+						is-open="opened" 
+						datepicker-options="dateOptions" 
+						date-disabled="disabled(date, mode)"
+						show-button-bar="false" 
+						/>
+					<p ng-show="showErrors && bookDateForm.bookingDate.$invalid" class="help-block">Departure date required.</p>
+				</div>
+			</div>
 		</div>
-		<b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
-		<button id="" name="" class="btn btn-primary" ng-click="addBooking()">Begin Booking</button>
+		<!--<b>{{cart.getTotalCount()}}</b> items-->
+		
+		<button type="submit" class="btn btn-primary" >Add booking</button>
+		
+		</form>
+		<!-- BOOKING FORM END -->
 	</div>
 
 	<div class="col-md-6 pull-left">

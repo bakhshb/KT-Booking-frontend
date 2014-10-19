@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-<div class="row">
+<div class="row hidden-xs">
 	<div class="steps">
 		<div class="step1 col-md-3 currentStep">
 			<div class="circle col-md-4">1</div>
@@ -31,7 +31,44 @@
 
     <div class="row">
 	
-		<h2>Tour dates</h2>
+		<h2>Tours and departure dates</h2>
+		
+		<p>Here is your currently selected tour dates, please the correct dates before continuing.</p>
+		
+		<div class="span8">
+            <table class="table table-condensed table-responsive ">
+
+                <tr ng-hide="cart.getTotalCount() > 0" >
+                    <td class="tdCenter" colspan="4">
+                        Your cart is empty.
+                    </td>
+                </tr>
+
+                <tr class="cartItemRow" ng-repeat="item in cart.items | orderBy:'name'">
+					<td class="tdCenter text-center"><img ng-src="{{item.detail.tour.images[0]}}" height="140px" /></td>
+                    <td>
+						<div class="text-primary"><h4>{{item.name}}</h4></div>
+						<div>Departure date: {{item.detail.date}}</div>
+					</td>
+                    <td class="tdRight">
+						<div>{{item.price * item.quantity | currency}}</div>
+					</td>
+                    <td class="tdCenter" title="remove from cart">
+                        <a href="" class="text-danger" style="font-size:20px;" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
+							<span class="glyphicon glyphicon-remove"></span>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr class="">
+					<td></td>
+                    <td class="text-right"><b>Total</b></td>
+                    <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
+                    <td />
+                </tr>
+				
+            </table>
+        </div>
 	
         <div class="span8">
 
@@ -55,7 +92,7 @@
 
                 <!-- cart items -->
                 <tr ng-repeat="item in cart.items | orderBy:'name'">
-                    <td>{{item.name}}</td>
+                    <td>{{item.name}} - {{item.detail.date}}</td>
                     <td class="tdCenter">
                       tour date here
                     </td>
@@ -82,8 +119,8 @@
             <p class="text-info">
                 <button 
                     class="btn btn-block" 
-                    onclick="window.location.href='default.htm'">
-                    <i class="icon-chevron-left" /> Book additional tours
+                    onclick="window.location.href='#/tours'">
+                    <i class="icon-chevron-left" /> Book additional tours/dates
                 </button>
                 <button 
                     class="btn btn-block btn-danger" 
@@ -95,7 +132,7 @@
 
             <br /><br />
 			
-			<a href="#/booking/passengers">Continue booking</a>
+			<a href="#/booking/passengers" ng-show="canContinue()">Continue booking</a>
 
         </div>
     </div>

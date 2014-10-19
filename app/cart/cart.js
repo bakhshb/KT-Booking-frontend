@@ -19,17 +19,25 @@ angular.module('ktApp.cart', [])
 
 	$scope.cart = DataService.cart;
 	
+	$scope.canContinue = function () {
+		if ($scope.cart.items.length > 0) return true;
+		return false;
+	};
+	
 	//$scope.tours = tours.query();
 
 }])
 
 
-.controller('PassengerCtrl', ['$scope', '$timeout', 'DataService', function($scope, $timeout, DataService) {
+.controller('PassengerCtrl', ['$scope', '$timeout', '$location', 'DataService', function($scope, $timeout, $location, DataService) {
 
-	//$scope.cart = DataService.cart;
+	var cart = DataService.cart;
+	
+	if (cart.items.length < 1) {
+		$location.path('/booking/tours');
+	}
 	
 	$scope.passengers = [];
-	
 	$scope.passengers.push(new passenger($scope.passengers.length));
 	
 	var loadPassengers = function () {

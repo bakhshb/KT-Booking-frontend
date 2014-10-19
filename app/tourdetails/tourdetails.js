@@ -24,28 +24,49 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 	
 	
 	$scope.cart = DataService.cart;
-
-	$scope.addBooking = function() {//tourID should be the tourBookingDateID likewise for price
-		DataService.cart.addItem($scope.tour.id, $scope.tour.name, $scope.tour.price, 1);
-		$location.path('/booking/tours');
+	
+	$scope.submitForm = function() {
+		//if ($scope.bookDateForm.$valid) {
+		if ($scope.bookdate) {
+			var detail = {
+				tour: $scope.tour,
+				date: $scope.bookdate
+			};
+			DataService.cart.addItem($scope.bookdate, $scope.tour.name, $scope.tour.price, 1, detail);
+			$location.path('/booking/tours');
+		}
+		$scope.showErrors = true;
 	};
 	
+$scope.options = [{
+   name: 'Wednesday, 8 Oct 2014',
+   value: '8/10/2014'
+}, {
+   name: 'Wednesday, 17 Oct 2014',
+   value: '11/10/2014'
+}];
 	
-	
+	$scope.dt = new Date();
 
-	$scope.dt = 0;
+	$scope.test = ['8/10/2014','11/10/2014'];//get these from tour schedule . is it in the same details request?
+	/*
+	angular.forEach(values, function(value, key) {
+	  this.push(key + ': ' + value);
+	}, log);
+	*/
 
-	var test = ['8/10/2014','11/10/2014','17/10/2014'];//get these from tour schedule . is it in the same details request?
-	
 	$scope.disabled = function(date, mode) {
 		var d = date.getDate();
 		var m = date.getMonth()+1; //jan is 0
 		var yyyy = date.getFullYear();
 		var check = d + '/' + m + '/' + yyyy;
-		return ( !(test.indexOf( check ) > -1) );
+		for (var i = 0; i < $scope.test.length; i++) {
+			if ($scope.test[i] == check) return false;
+		}
+		return true;
 	};
 
-	$scope.open = function($event) {
+	$scope.openCal = function($event) {
 		$event.preventDefault();
 		$event.stopPropagation();
 		$scope.opened = true;
@@ -55,11 +76,29 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 		formatYear: 'yyyy',
 		formatMonth: 'MMMM',
 		formatDay: 'd',
-		startingDay: 1
+		startingDay: 1,
+		showWeeks: false
+	};
+
+	var clear = function () {
+		$scope.dt = null;
 	};
 
 	$scope.formats = ['dd-MMMM-yyyy', 'd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
 	$scope.format = $scope.formats[1];
 	
+	
+	var updateSelect = function () {
+		for (var i = 0; i < $scope.test.length; i++) {
+			var d = $scope.dt.getDate();
+			var m = $scope.dt.getMonth()+1; //jan is 0
+			var yyyy = $scope.dt.getFullYear();
+			var check = d + '/' + m + '/' + yyyy;
+			if(check == $scope.test[i]){
+				$scope.bookdate = $scope.test[i];
+			}
+		}
+	}
+	$scope.$watch('dt', updateSelect);
 	
 }]);
