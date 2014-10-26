@@ -76,6 +76,17 @@ shoppingCart.prototype.addItem = function (sku, name, price, quantity, detail) {
     }
 }
 
+shoppingCart.prototype.removeItem = function (sku) {
+        for (var i = 0; i < this.items.length; i++) {
+            var item = this.items[i];
+            if (item.sku == sku) {
+                this.items.splice(i, 1);
+            }
+        }
+        this.saveItems();
+}
+
+
 // get the total price for all items currently in the cart
 shoppingCart.prototype.getTotalPrice = function (sku) {
     var total = 0;

@@ -55,7 +55,7 @@
 					</td>
                     <td class="tdCenter" title="remove from cart">
                         <a href="" class="text-danger" style="font-size:20px;" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
-							<span class="glyphicon glyphicon-remove"></span>
+							<span class="glyphicon glyphicon-remove" ng-click="cart.removeItem(item.sku)"></span>
                         </a>
                     </td>
                 </tr>
@@ -98,7 +98,7 @@
                     </td>
                     <td class="tdRight">{{item.price * item.quantity | currency}}</td>
                     <td class="tdCenter" title="remove from cart">
-                        <a href="" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
+                        <a href="" ng-click="cart.removeItem(item.sku)" >
                             remove icon
                         </a>
                     </td>
