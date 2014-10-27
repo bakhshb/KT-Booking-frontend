@@ -14,12 +14,13 @@
 	<script src="bower_components/angular-resource/angular-resource.js"></script>
 	<script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
 	<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-	<!--<script src="assets/vendor/bootstrap.js"></script>-->
+	<script src="assets/vendor/bootstrap.js"></script>
 	<script src="app.js"></script>
 	<script src="home/home.js"></script>
 	<script src="about/about.js"></script>
 	<script src="tours/tours.js"></script>
 	<script src="tourdetails/tourdetails.js"></script>
+	<script src="gallery/gallery.js"></script>
 	<script src="contact/contact.js"></script>
 	<script src="common/animations.js"></script>
 	<script src="common/services/tours.js"></script>
@@ -32,7 +33,16 @@
 		<nav class="container" role="navigation">
 		  <div class="container-fluid">
 
-			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav ">
+				<li ng-class="{active:isActive('/home')}"><a href="#/home">Home</a></li>
+				<li ng-class="{active:isActive('/about')}"><a href="#/about">About</a></li>
+				<li ng-class="{active:isActive('/gallery')}"><a href="#/gallery">Gallery</a></li>
+				<li ng-class="{active:isActive('/tours')}"><a href="#/tours">Tours</a></li>
+				<li ng-class="{active:isActive('/contact')}"><a href="#/contact">Contact</a></li>
+			  </ul>
+			</div>
+
 			<div class="navbar-header navbar-default">
 			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span>
@@ -44,18 +54,7 @@
 			  <span class="callus">Call 0800 123 456</span>
 			</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			  <ul class="nav navbar-nav pull-right">
-				<li ng-class="{active:isActive('/home')}"><a href="#/home">Home</a></li>
-				<li ng-class="{active:isActive('/about')}"><a href="#/about">About</a></li>
-				<li ng-class="{active:isActive('/gallery')}"><a href="#/gallery">Gallery</a></li>
-				<li ng-class="{active:isActive('/tours')}"><a href="#/tours">Tours</a></li>
-				<li ng-class="{active:isActive('/contact')}"><a href="#/contact">Contact</a></li>
-			  </ul>
-			</div><!-- /.navbar-collapse -->
-			
-		  </div><!-- /.container-fluid -->
+		  </div>
 		</nav>
 	</header>
 

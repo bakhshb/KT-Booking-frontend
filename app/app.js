@@ -8,6 +8,7 @@ angular.module( 'ktApp', [
 	'ktApp.about',
 	'ktApp.tours',
 	'ktApp.tourdetails',
+	'ktApp.gallery',
 	'ktApp.contact',
 	'ktApp.cart'
 ])

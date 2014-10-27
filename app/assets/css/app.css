@@ -8,38 +8,70 @@ body {
 	min-height:500px;
 }
 
+/********** MENUS COMMON ***********/
+
 .navbar {
 	padding:0;
 	margin:0;
+	margin-bottom:-1px;
+}
+.navbar > div {
+	position:relative;
+}
+.navbar-default {
+	background:none;
+	min-height:160px;
+	position:relative;
 }
 .navbar-brand {
 	padding:0;
 	margin:0;
 	padding-top:65px;
+	width:100px;
 }
-.callus {
-	position:absolute;
-	top:130px;
-	font-weight:bold;
-	padding-bottom:10px;
-}
-.navbar-brand img {
-	vertical-align:bottom;
-}
-.navbar-default {
-	background:none;
-}
-.navbar {
-	height:161px;
-}
-header>nav>.container-fluid {
+.callus { 
 	position:relative;
+	left:240px;
+	top:130px;
 }
-.nav {
-	position:absolute;
-	right:10px;
+/*
+.container  {
+	padding:0;
 }
+*/
+
+/********** MOBILE MENU ***********/
+@media (max-width: 765px) {
+	.nav {
+		margin:0px;
+	}
+	.navbar-nav>li {
+		background-color:#ddd;
+		min-width:100%;
+	}
+	.navbar-nav>li>a {
+		line-height:30px;
+		font-weight:bold;
+		color:#000;
+		text-align:center;
+	}
+}
+
+@media (max-width: 995px) {
+	.navbar-brand {
+		width:100px;
+	}
+	
+	.tourNav, .callus { 
+		display:none;
+	}
+}
+
+/********** MAIN MENU ***********/
 @media (min-width: 765px) {
+	#bs-example-navbar-collapse-1 {
+		float:right;
+	}
 	.navbar-nav>li>a {
 		line-height:130px;
 		font-weight:bold;
@@ -55,20 +87,8 @@ header>nav>.container-fluid {
 		font-weight:bold;
 	}
 }
-@media (max-width: 765px) {
-	.navbar-nav>li {
-		background-color:#ccc;
-	}
-	.navbar-nav>li {
-		min-width:200px;
-	}
-	.navbar-nav>li>a {
-		line-height:30px;
-		font-weight:bold;
-		color:#000;
-		text-align:center;
-	}
-}
+
+/********** BANNER ***********/
 .jumbotron {
 	padding:0;
 	margin:0;
@@ -84,12 +104,8 @@ header>nav>.container-fluid {
 	color:#fff;
 	font-size:35px !important;
 }
-@media (max-width: 990px) {
-	.tourNav, .callus { 
-		display:none;
-	}
-}
 
+/********** COMMON ***********/
 .tourNav {
 	background:#eaeaea;
 	margin-top:20px;
