@@ -31,13 +31,14 @@ angular.module('ktApp.gallery', [])
                 console.log(value);
             });
             $(element).magnificPopup({
-				//delegate: 'a', //todo: currently adding on scope, or do by html tag?
-				items: scope.$eval(attrs.test),
+				delegate: 'a', 
+				//items: scope.$eval(attrs.test), //add test="{{testitems}}" to html
 				gallery: {
 					enabled: true,
 					navigateByImgClick: true,
 					preload: [0,1] // Will preload 0 - before current, and 1 after the current image
 				},
+				closeBtnInside: false,
 				type: 'image',
 				/*TODO
 				tLoading: 'Loading image #%curr%...',

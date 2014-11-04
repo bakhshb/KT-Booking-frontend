@@ -31,16 +31,25 @@
 
     <div class="row">
 	
+		<span class="btnContinueGrey pull-right">
+			<a href="#/tours">
+				<span class="glyphicon glyphicon-plane"></span>
+				Book additional tours/dates
+			</a>
+		</span>
+		
 		<h2>Tours and departure dates</h2>
 		
 		<p>Here is your currently selected tour dates, please the correct dates before continuing.</p>
 		
-		<div class="span8">
+		
+		
+		<div class="span8 col-md-12">
             <table class="table table-condensed table-responsive ">
 
                 <tr ng-hide="cart.getTotalCount() > 0" >
                     <td class="tdCenter" colspan="4">
-                        Your cart is empty.
+                        Your cart is empty. <a href="" onclick="window.location.href='#/tours'">Find a tour!</a>
                     </td>
                 </tr>
 
@@ -50,11 +59,11 @@
 						<div class="text-primary"><h4>{{item.name}}</h4></div>
 						<div>Departure date: {{item.detail.date}}</div>
 					</td>
-                    <td class="tdRight">
+                    <td class="tdRight text-center">
 						<div>{{item.price * item.quantity | currency}}</div>
 					</td>
                     <td class="tdCenter" title="remove from cart">
-                        <a href="" class="text-danger" style="font-size:20px;" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
+                        <a href="" class="text-danger" style="font-size:20px;" >
 							<span class="glyphicon glyphicon-remove" ng-click="cart.removeItem(item.sku)"></span>
                         </a>
                     </td>
@@ -63,77 +72,35 @@
                 <tr class="">
 					<td></td>
                     <td class="text-right"><b>Total</b></td>
-                    <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
+                    <td class="tdRight text-center"><b>{{cart.getTotalPrice() | currency}}</b></td>
                     <td />
                 </tr>
 				
             </table>
         </div>
 	
-        <div class="span8">
-
-            <!-- items -->
-            <table class="table table-bordered">
-
-                <!-- header -->
-                <tr class="well">
-                    <td><b>Tour name</b></td>
-                    <td class="tdCenter">Departure date</td>
-                    <td class="tdRight"><b>Price</b></td>
-                    <td />
-                </tr>
-
-                <!-- empty cart message -->
-                <tr ng-hide="cart.getTotalCount() > 0" >
-                    <td class="tdCenter" colspan="4">
-                        Your cart is empty.
-                    </td>
-                </tr>
-
-                <!-- cart items -->
-                <tr ng-repeat="item in cart.items | orderBy:'name'">
-                    <td>{{item.name}} - {{item.detail.date}}</td>
-                    <td class="tdCenter">
-                      tour date here
-                    </td>
-                    <td class="tdRight">{{item.price * item.quantity | currency}}</td>
-                    <td class="tdCenter" title="remove from cart">
-                        <a href="" ng-click="cart.removeItem(item.sku)" >
-                            remove icon
-                        </a>
-                    </td>
-                </tr>
-
-                <!-- footer -->
-                <tr class="well">
-                    <td></td>
-                    <td class="text-right"><b>Total</b></td>
-                    <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
-                    <td />
-                </tr>
-            </table>
-        </div>
-
-        <!-- buttons -->
-        <div class="span4">
-            <p class="text-info">
-                <button 
-                    class="btn btn-block" 
-                    onclick="window.location.href='#/tours'">
-                    <i class="icon-chevron-left" /> Book additional tours/dates
-                </button>
-                <button 
-                    class="btn btn-block btn-danger" 
-                    ng-click="cart.clearItems()" 
-                    ng-disabled="cart.getTotalCount() < 1" >
-                    <i class="icon-trash icon-white" /> clear cart
-                </button>
-            </p>
-
-            <br /><br />
-			
-			<a href="#/booking/passengers" ng-show="canContinue()">Continue booking</a>
-
-        </div>
     </div>
+
+	<div class="row">
+	
+		<div class="col-md-2 pull-left">
+			<span class="btnCartRed">
+				<a href="" ng-show="cart.getTotalCount() > 0" ng-click="cart.clearItems()" ng-disabled="cart.getTotalCount() < 1">
+					<span class="glyphicon glyphicon-trash"></span>
+					clear bookings
+				</a>
+			</span>
+		</div>
+		
+        <div class="text-right col-md-3 pull-right">
+			<span class="btnCartGreen">
+				<a href="#/booking/passengers" ng-show="cart.getTotalCount() > 0">
+					Continue booking
+					<span class="glyphicon glyphicon-arrow-right"></span>
+				</a>
+			</span>
+        </div>
+		
+    </div>
+	
 </div>

@@ -11,7 +11,7 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 }])
 
 
-.controller('ToursDetailsCtrl', ['$scope', '$routeParams', '$location', 'tours', 'DataService', function($scope, $routeParams, $location, tours, DataService) {
+.controller('ToursDetailsCtrl', ['$scope', '$routeParams', '$location', 'tours', 'CartService', function($scope, $routeParams, $location, tours, CartService) {
 
 	$scope.tour = tours.get({tourId: 'tour'+$routeParams.tourId}, function(tour) {
       $scope.mainImageUrl = tour.images[0];
@@ -23,7 +23,7 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 	
 	
 	
-	$scope.cart = DataService.cart;
+	$scope.cart = CartService.cart;
 	
 	$scope.submitForm = function() {
 		//if ($scope.bookDateForm.$valid) {
@@ -32,7 +32,7 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 				tour: $scope.tour,
 				date: $scope.bookdate
 			};
-			DataService.cart.addItem($scope.bookdate, $scope.tour.name, $scope.tour.price, 1, detail);
+			CartService.cart.addItem($scope.bookdate, $scope.tour.name, $scope.tour.price, 1, detail);
 			$location.path('/booking/tours');
 		}
 		$scope.showErrors = true;

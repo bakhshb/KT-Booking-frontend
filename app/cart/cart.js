@@ -4,45 +4,80 @@ angular.module('ktApp.cart', [])
 
 
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/booking/tours', { 
+    $routeProvider.when('/booking/tours', {
 		templateUrl: 'cart/cart.html',
 		controller: 'CartCtrl'
 	})
-	.when('/booking/passengers', { 
+	.when('/booking/passengers', {
 		templateUrl: 'cart/passengers.html',
 		controller: 'PassengerCtrl'
+	})
+	.when('/booking/payment', {
+		templateUrl: 'cart/payment.html',
+		controller: 'PaymentCtrl'
 	});
 }])
 
 
-.controller('CartCtrl', ['$scope', 'tours', 'DataService', function($scope, tours, DataService) {
+.controller('CartCtrl', ['$scope', 'tours', 'CartService', function($scope, tours, CartService) {
 
-	$scope.cart = DataService.cart;
-	
-	$scope.canContinue = function () {
-		if ($scope.cart.items.length > 0) return true;
-		return false;
-	};
+	$scope.cart = CartService.cart;
 	
 	//$scope.tours = tours.query();
 
 }])
 
 
-.controller('PassengerCtrl', ['$scope', '$timeout', '$location', 'DataService', function($scope, $timeout, $location, DataService) {
+.controller('PaymentCtrl', ['$scope', 'tours', 'CartService', function($scope, tours, CartService) {
 
-	var cart = DataService.cart;
+	$scope.cart = CartService.cart;
+	$scope.test = 's';
+	//$scope.tours = tours.query();
+	
+	$scope.passengers = [];
+	var loadPassengers = function () {
+		var items = localStorage != null ? localStorage['ktbooking_passengers'] : null;
+		if (items && JSON != null) {
+			try {
+				var items = JSON.parse(items);
+				$scope.passengers = items;
+				console.log('PARSED: ' + items);
+			}catch (err) {
+				console.log('ERROR: ' + err);
+			}
+		}
+	}
+	loadPassengers();
+	if ($scope.passengers.length <= 0) {
+		$location.path('/booking/passengers');
+	}
+
+}])
+
+
+.controller('PassengerCtrl', ['$scope', '$timeout', '$location', 'CartService', function($scope, $timeout, $location, CartService) {
+
+	var cart = CartService.cart;
 	
 	if (cart.items.length < 1) {
 		$location.path('/booking/tours');
 	}
 	
+	$scope.submitForm = function() {
+		if ($scope.passengerForm.$valid) {
+		//if (valid) {
+			$location.path('/booking/payment');
+		}
+		$scope.showFormErrors = true;
+	};
+	
 	$scope.passengers = [];
-	$scope.passengers.push(new passenger($scope.passengers.length));
+	$scope.passengers.push(new passenger($scope.passengers.length+1));
 	
 	var loadPassengers = function () {
+		
 		var items = localStorage != null ? localStorage['ktbooking_passengers'] : null;
-		if (items != null && JSON != null) {
+		if (items && JSON != null) {
 			try {
 				var items = JSON.parse(items);
 				$scope.passengers = items;
@@ -54,7 +89,6 @@ angular.module('ktApp.cart', [])
 		}
 	}
 	loadPassengers();
-	//localStorage['ktbooking_passengers'] = null;
 	
 	var savePassengers = function () {
 		console.log($scope.passengers);
@@ -78,13 +112,53 @@ angular.module('ktApp.cart', [])
 			new passenger($scope.passengers.length)
 		);
 	};
+	$scope.remove = function (pId) {
+		for(var i=$scope.passengers.length-1; i>=0; i--) {
+			if($scope.passengers[i].id === pId) {
+				$scope.passengers.splice(i, 1);
+				console.log($scope.passengers[i].fname);
+			}
+		}
+	};
 	
 	$scope.$watch('passengers', throttleSavePassengers, true);
 	
+	
+	/*
+	 * calendar related
+	 */
+	$scope.open = function($event, opened) {
+		//console.log('opened = ' + opened);
+		$event.preventDefault();
+		$event.stopPropagation();
+		$scope[opened] = true;
+		//console.log('sc = ' + $scope.asd1);
+	};
+
+	$scope.dateOptions = {
+		formatYear: 'yy',
+		startingDay: 1
+	};
+	
+	//var datefilter = $filter('date'),
+    //formattedDate = datefilter($scope.dt, 'yyyy/MM/dd');
+	
 }])
 
+.directive('formatsqldate', function ($filter) {
+    return {
+		restrict: 'A',
+		require: 'ngModel',
+        link: function (scope, element, attrs, ctrl) {
+            ctrl.$parsers.unshift(function (viewValue) {
+                return $filter('date')(viewValue,'yyyy-MM-dd');
+            });            
+        }
+    };
+})
 
-.factory("DataService", function () {
+
+.factory("CartService", function () {
 
     //var myStore = new store();
 
@@ -92,7 +166,7 @@ angular.module('ktApp.cart', [])
 
     // enable PayPal checkout
     // https://www.paypal.com/webapps/mpp/merchant
-    myCart.addCheckoutParameters("PayPal", "paypaluser@youremail.com");
+    myCart.addCheckoutParameters("PayPal", "rowanovenden@gmail.com");
 
     // enable Google Wallet checkout
     // https://developers.google.com/commerce/wallet/digital/training/getting-started/merchant-setup
@@ -117,4 +191,13 @@ function passenger(id) {
     this.id = id;
     this.fname = '';
 	this.lname = '';
+	this.nickname = '';
+	this.gender = '';
+	this.phone = '';
+	this.mobile = '';
+	this.email = '';
+	this.dob = '';
+	this.address = '';
+	this.nationality = '';
+	this.country = '';
 }

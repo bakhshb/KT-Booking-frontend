@@ -27,10 +27,10 @@ shoppingCart.prototype.loadItems = function () {
             var items = JSON.parse(items);
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
-                if (item.sku != null && item.name != null && item.price != null && item.quantity != null) {
+                //if (item.sku != null && item.name != null && item.price != null && item.quantity != null) {
                     item = new cartItem(item.sku, item.name, item.price, item.quantity, item.detail);
                     this.items.push(item);
-                }
+               //}
             }
         }
         catch (err) {
