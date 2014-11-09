@@ -11,8 +11,8 @@ angular.module('ktApp.tours', [])
 }])
 
 
-.controller('ToursCtrl', ['$scope', 'tours', function($scope, tours) {
+.controller('ToursCtrl', ['$scope', 'tourResources', function($scope, tourResources) {
 
-	$scope.tours = tours.getot();
+	$scope.tours = tourResources.tour.query();
 
 }]);

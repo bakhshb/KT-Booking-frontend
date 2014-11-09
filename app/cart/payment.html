@@ -35,17 +35,18 @@
 		
 		<p>You have selected to book {{cart.getTotalCount()}} trips with {{passengers.length}} passenger<span ng-hide="passengers.length<2">s</span></p>
 		<p>Please verify the tours and Departure dates before choosing and proceeding with your payment.</p>
-		
+	
 		<div class="span8 col-md-12">
             <table class="table table-condensed table-responsive ">
 
                 <tr class="cartItemRow" ng-repeat="item in cart.items | orderBy:'name'">
                     <td>
 						<div class="text-primary"><h4>{{item.name}}</h4></div>
-						<div>Departure date: {{item.detail.date}}</div>
+						<div>Departure date: {{item.detail.departureDate}}</div>
+						<input type="hidden" name="dateId" value="{{item.sku}}" />
 					</td>
                     <td class="tdRight text-center">
-						<div>{{item.price * item.quantity | currency}}</div>
+						<div>{{item.price | currency}}</div>
 					</td>
                 </tr>
 
@@ -57,8 +58,8 @@
 					</td>
                     <td class="tdRight text-center">
 						<p><b>{{passengers.length}}</b></p>
-						<p><b>{{cart.getTotalPrice() | currency }}</b></p>
-						<p><b>{{cart.getTotalPrice() * passengers.length | currency}}</b></p>
+						<p><b>{{cart.getTotalPrice()/passengers.length | currency }}</b></p>
+						<p><b>{{cart.getTotalPrice() | currency}}</b></p>
 					</td>
                 </tr>
 				
@@ -68,11 +69,19 @@
     </div>
 	
 	<div class="row">
-		
-		<div class="col-md-3 pull-right">
-			<button class="btn-link" ng-click="cart.checkout('PayPal')">
+		<div class="col-md-3 pull-right text-center">
+			<button class="btn-link paymentHover" ng-click="checkoutSuperSecure()">
+				<span class="text-center text-success">Pay via credit card</span>
+				<img src="assets/img/ccs.jpg" alt="checkout PayPal"/>
+			</button>
+		</div>
+    </div>
+	
+	<div class="row" style="padding-top:20px;">
+		<div class="col-md-3 pull-right text-center">
+			<button class="btn-link paymentHover" ng-click="cart.checkout('PayPal', false)">
 				<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
-			</button> 
+			</button>
 		</div>
     </div>
 	

@@ -43,10 +43,10 @@
 				<h3 class="" ng-hide="$index==0">Passenger {{$index+1}}</h3>
 			
 				<span class="btnCartRed pull-right" >
-					<a href="" ng-click="remove(p.id)" ng-hide="$index==0">
+					<button ng-click="remove(p.id)" ng-hide="$index==0">
 						<span class="glyphicon glyphicon-minus"></span>
 						Remove this passenger
-					</a>
+					</button>
 				</span>
 			
 				<div class="form-group">
@@ -108,7 +108,7 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label" for="">Email</label>  
 					<div class="col-md-4 ">
-						<input required id="" name="email" placeholder="" class="form-control input-md" type="text" ng-model="p.email" />
+						<input type="email" required id="email{{$index}}" name="email" placeholder="" class="form-control input-md" ng-model="p.email" />
 					</div>
 					<div ng-show="(innerForm.email.$dirty && innerForm.email.$invalid) || showFormErrors">
 						<span class="help-block" ng-show="innerForm.email.$error.required">Required.</span>
@@ -116,10 +116,20 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-4 control-label" for="">Confirm Email</label>  
+					<div class="col-md-4 ">
+						<input type="email" required id="" name="email2" placeholder="" class="form-control input-md" ng-model="p.email2" password-verify="p.email" />
+					</div>
+					<div ng-show="(innerForm.email2.$dirty && innerForm.email2.$invalid) || showFormErrors">
+						<div ng-show="innerForm.email2.$error.required">Required</div>
+						<div ng-show="innerForm.email2.$error.passwordVerify">Emails do not match</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-4 control-label" for="">Date of birth</label>  
 					<div class="col-md-4 ">
 						<p class="input-group">{{tests}}
-							<input type="text" class="form-control" readonly formatsqldate datepicker-popup="dd MMMM yyyy" ng-model="p.dob" is-open="$parent['opened'+p.id]" datepicker-options="dateOptions" close-text="Close" />
+							<input type="text" class="form-control" readonly formatsqldate datepicker-popup="dd MMMM yyyy" ng-model="p.dob" is-open="$parent['opened'+p.id]" datepicker-options="dateOptions" close-text="Close" placeholder="Pick a date" />
 							<span class="input-group-btn">
 								<button type="button" class="btn btn-default" ng-click="open($event, 'opened'+p.id)"><i class="glyphicon glyphicon-calendar"></i></button>
 							</span>
@@ -597,22 +607,22 @@
 		
 		
 		<span class="btnCartGreen">
-			<a href="" ng-click="add()">
+			<button ng-click="add()">
 				<span class="glyphicon glyphicon-plus"></span>
 				Add another passenger
-			</a>
+			</button>
 		</span>
 		
 		<div class="text-right col-md-3 pull-right">
 			<span class="btnCartGreen">
-				<a href="" ng-click="submitForm()">
+				<button ng-click="submitForm()">
 					Continue booking
 					<span class="glyphicon glyphicon-arrow-right"></span>
-				</a>
+				</button>
 			</span>
-			<span class="help-block" ng-show="passengerForm.$invalid">Required.</span>
+			<span class="help-block" ng-show="passengerForm.$invalid && showFormErrors">Please complete the form to continue.</span>
         </div>
 		
-		<div>{{passengers}}</div>
+		<div style="padding-bottom:40px;"></div>
     </div>
 </div>

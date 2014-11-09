@@ -54,18 +54,18 @@
                 </tr>
 
                 <tr class="cartItemRow" ng-repeat="item in cart.items | orderBy:'name'">
-					<td class="tdCenter text-center"><img ng-src="{{item.detail.tour.images[0]}}" height="140px" /></td>
+					<td class="tdCenter text-center"><img ng-src="{{item.detail.image}}" style="max-height:100px;max-width:100px;" /></td>
                     <td>
 						<div class="text-primary"><h4>{{item.name}}</h4></div>
-						<div>Departure date: {{item.detail.date}}</div>
+						<div>Departure date: {{item.detail.departureDate}}</div>
 					</td>
                     <td class="tdRight text-center">
-						<div>{{item.price * item.quantity | currency}}</div>
+						<div>{{item.price | currency}}</div>
 					</td>
                     <td class="tdCenter" title="remove from cart">
-                        <a href="" class="text-danger" style="font-size:20px;" >
+                        <span class="text-danger" style="font-size:20px;cursor:pointer;" >
 							<span class="glyphicon glyphicon-remove" ng-click="cart.removeItem(item.sku)"></span>
-                        </a>
+                        </span>
                     </td>
                 </tr>
 
@@ -81,14 +81,14 @@
 	
     </div>
 
-	<div class="row">
+	<div class="row" style="padding-bottom:30px;">
 	
 		<div class="col-md-2 pull-left">
 			<span class="btnCartRed">
-				<a href="" ng-show="cart.getTotalCount() > 0" ng-click="cart.clearItems()" ng-disabled="cart.getTotalCount() < 1">
+				<button ng-show="cart.getTotalCount() > 0" ng-click="cart.clearItems()" ng-disabled="cart.getTotalCount() < 1">
 					<span class="glyphicon glyphicon-trash"></span>
 					clear bookings
-				</a>
+				</button>
 			</span>
 		</div>
 		

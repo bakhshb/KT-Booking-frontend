@@ -11,14 +11,73 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 }])
 
 
-.controller('ToursDetailsCtrl', ['$scope', '$routeParams', '$location', 'tours', 'CartService', function($scope, $routeParams, $location, tours, CartService) {
+.controller('ToursDetailsCtrl', ['$scope', '$routeParams', '$location', 'tourResources', 'CartService', function($scope, $routeParams, $location, tourResources, CartService) {
+	/*
+	doSuccess = function(){
+		console.log('seuc');
+	}
+	doError = function(){
+		console.log('err');
+	}
+	*/
+	tourResources.tour.get({tourId: $routeParams.tourId})
+	.$promise.then(
+		function( value ){
+			console.log('tourResources.tour.get success');
+			$scope.tour = value;
+		},
+		function( error ){
+			console.log('could not find tour id');
+			//$location.url('/404');
+		}
+	)
+	
+	tourResources.schedule.query({tourId: $routeParams.tourId})
+	.$promise.then(
+		function( value ){
+			console.log('tourResources.schedule.query success');
+			$scope.dates = value;
+		},
+		function( error ){
+			console.log('could not find any schedule dates');
+			//$location.url('/404');
+		}
+	)
+	
+	tourResources.photo.query({tourId: $routeParams.tourId})
+	.$promise.then(
+		function( response ){
+			//todo double check response
+			//if(value.successCode == 200 && resposne.length > 0)
+			console.log('tourResources.photo.query success');
+			$scope.images = response;
+			$scope.primaryImage = $scope.images[0].photo;
+			for (var i=0; i<response.length; i++) {
+				if(response[i].activated) $scope.primaryImage = $scope.images[i].photo;
+			}
+			$scope.mainImageUrl = $scope.primaryImage;
+		},
+		function( error ){
+			console.log('could not find any images');
+		}
+	)
+	
+	/*
+	.$promise.then(
+		function( value ){
+			console.log(value);
+		},
+		function( error ){
+			console.log(error);
+			//$location.url('/404');
+		}
+	)
+	$scope.tour = tourResources.tour.get({tourId: $routeParams.tourId}, function(tour) {
+      //$scope.mainImageUrl = tour.images[0];
+    });*/
 
-	$scope.tour = tours.get({tourId: 'tour'+$routeParams.tourId}, function(tour) {
-      $scope.mainImageUrl = tour.images[0];
-    });
-
-    $scope.setImage = function(imageUrl) {
-      $scope.mainImageUrl = imageUrl;
+    $scope.setImage = function(image) {
+      $scope.mainImageUrl = image.photo;
     };
 	
 	
@@ -28,40 +87,28 @@ angular.module('ktApp.tourdetails', ['ui.bootstrap'])
 	$scope.submitForm = function() {
 		//if ($scope.bookDateForm.$valid) {
 		if ($scope.bookdate) {
-			var detail = {
-				tour: $scope.tour,
-				date: $scope.bookdate
-			};
-			CartService.cart.addItem($scope.bookdate, $scope.tour.name, $scope.tour.price, 1, detail);
+			if($scope.primaryImage) var dpImage = 'http://tomcat-oneninetwo.rhcloud.com/uploads/'+$scope.primaryImage;
+			else var dpImage = 'assets/img/bus.jpg';
+			$scope.bookdate.image = dpImage;
+			CartService.cart.addItem($scope.bookdate.id, $scope.bookdate.tour.name, $scope.bookdate.price, 1, $scope.bookdate);
 			$location.path('/booking/tours');
 		}
 		$scope.showErrors = true;
 	};
-	
-$scope.options = [{
-   name: 'Wednesday, 8 Oct 2014',
-   value: '8/10/2014'
-}, {
-   name: 'Wednesday, 17 Oct 2014',
-   value: '11/10/2014'
-}];
-	
-	$scope.dt = new Date();
 
-	$scope.test = ['8/10/2014','11/10/2014'];//get these from tour schedule . is it in the same details request?
-	/*
-	angular.forEach(values, function(value, key) {
-	  this.push(key + ': ' + value);
-	}, log);
-	*/
+	
+	//var qwe = new Date();
+	//var qwe.setDate(qwe.getDate() - 8);
+	var today = new Date();
+	$scope.dt = today;
 
 	$scope.disabled = function(date, mode) {
 		var d = date.getDate();
 		var m = date.getMonth()+1; //jan is 0
-		var yyyy = date.getFullYear();
-		var check = d + '/' + m + '/' + yyyy;
-		for (var i = 0; i < $scope.test.length; i++) {
-			if ($scope.test[i] == check) return false;
+		var y = date.getFullYear();
+		var check = y + '-' + m + '-' + d;
+		for (var i = 0; i < $scope.dates.length; i++) {
+			if ($scope.dates[i].departureDate == check) return false;
 		}
 		return true;
 	};
@@ -80,25 +127,24 @@ $scope.options = [{
 		showWeeks: false
 	};
 
-	var clear = function () {
-		$scope.dt = null;
-	};
-
-	$scope.formats = ['dd-MMMM-yyyy', 'd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
-	$scope.format = $scope.formats[1];
+	$scope.formats = ['dd-MMMM-yyyy', 'yyyy-MM-dd', 'd/MM/yyyy', 'dd.MM.yyyy', 'shortDate'];
+	$scope.format = $scope.formats[1];//doesnt matter unless displaying the input field
 	
 	
 	var updateSelect = function () {
-		for (var i = 0; i < $scope.test.length; i++) {
-			var d = $scope.dt.getDate();
-			var m = $scope.dt.getMonth()+1; //jan is 0
-			var yyyy = $scope.dt.getFullYear();
-			var check = d + '/' + m + '/' + yyyy;
-			if(check == $scope.test[i]){
-				$scope.bookdate = $scope.test[i];
+		if($scope.dates != null)
+		{
+			for (var i = 0; i < $scope.dates.length; i++) {
+				var d = $scope.dt.getDate();
+				var m = $scope.dt.getMonth()+1; //jan is 0
+				var y = $scope.dt.getFullYear();
+				var check = y + '-' + m + '-' + d;
+				if(check == $scope.dates[i].departureDate){
+					$scope.bookdate = $scope.dates[i];
+				}
 			}
 		}
 	}
-	$scope.$watch('dt', updateSelect);
+	$scope.$watch('dt', updateSelect, true);
 	
 }]);

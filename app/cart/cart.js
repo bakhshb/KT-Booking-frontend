@@ -28,11 +28,9 @@ angular.module('ktApp.cart', [])
 }])
 
 
-.controller('PaymentCtrl', ['$scope', 'tours', 'CartService', function($scope, tours, CartService) {
+.controller('PaymentCtrl', ['$scope', 'CartService', 'tourResources', function($scope, CartService, tourResources) {
 
 	$scope.cart = CartService.cart;
-	$scope.test = 's';
-	//$scope.tours = tours.query();
 	
 	$scope.passengers = [];
 	var loadPassengers = function () {
@@ -41,7 +39,6 @@ angular.module('ktApp.cart', [])
 			try {
 				var items = JSON.parse(items);
 				$scope.passengers = items;
-				console.log('PARSED: ' + items);
 			}catch (err) {
 				console.log('ERROR: ' + err);
 			}
@@ -51,7 +48,31 @@ angular.module('ktApp.cart', [])
 	if ($scope.passengers.length <= 0) {
 		$location.path('/booking/passengers');
 	}
-
+	
+	//console.log($scope.cart.items);
+	for (var i=0; i<$scope.cart.items.length; i++) {
+		$scope.cart.items[i].quantity = $scope.passengers.length;
+	}
+	
+	$scope.checkoutSuperSecure = function(){
+		var bookingInfo = {
+			"firstName":"ro",
+			"lastName":"mo",
+			"birthday":514728000000, 
+			"gender":"Male", 
+			"nationality":"Anguilla", 
+			"email":"qwe@qwe.com", 
+			"contactNo":"0275553855", 
+			"tourSchedule": { 
+				"id":"98306" 
+			}, 
+			"booking": { 
+				"paymentMethod":"Cash" 
+			} 
+		};
+		tourResources.booking.save(bookingInfo);
+	}
+	
 }])
 
 
@@ -66,6 +87,7 @@ angular.module('ktApp.cart', [])
 	$scope.submitForm = function() {
 		if ($scope.passengerForm.$valid) {
 		//if (valid) {
+			savePassengers();
 			$location.path('/booking/payment');
 		}
 		$scope.showFormErrors = true;
@@ -91,7 +113,7 @@ angular.module('ktApp.cart', [])
 	loadPassengers();
 	
 	var savePassengers = function () {
-		console.log($scope.passengers);
+		//console.log($scope.passengers);
 		if (localStorage != null && JSON != null) {
 			localStorage['ktbooking_passengers'] = JSON.stringify($scope.passengers);
 			console.log('SAVED: ' + JSON.stringify($scope.passengers));
@@ -145,6 +167,38 @@ angular.module('ktApp.cart', [])
 	
 }])
 
+.directive("passwordVerify", function() {
+   return {
+      require: "ngModel",
+      scope: {
+        passwordVerify: '='
+      },
+      link: function(scope, element, attrs, ctrl) {
+        scope.$watch(function() {
+            var combined;
+
+            if (scope.passwordVerify || ctrl.$viewValue) {
+               combined = scope.passwordVerify + '_' + ctrl.$viewValue; 
+            }                    
+            return combined;
+        }, function(value) {
+            if (value) {
+                ctrl.$parsers.unshift(function(viewValue) {
+                    var origin = scope.passwordVerify;
+                    if (origin !== viewValue) {
+                        ctrl.$setValidity("passwordVerify", false);
+                        return undefined;
+                    } else {
+                        ctrl.$setValidity("passwordVerify", true);
+                        return viewValue;
+                    }
+                });
+            }
+        });
+     }
+   };
+})
+
 .directive('formatsqldate', function ($filter) {
     return {
 		restrict: 'A',
@@ -166,7 +220,7 @@ angular.module('ktApp.cart', [])
 
     // enable PayPal checkout
     // https://www.paypal.com/webapps/mpp/merchant
-    myCart.addCheckoutParameters("PayPal", "rowanovenden@gmail.com");
+    myCart.addCheckoutParameters("PayPal", "rowanovenden-facilitator@gmail.com");
 
     // enable Google Wallet checkout
     // https://developers.google.com/commerce/wallet/digital/training/getting-started/merchant-setup

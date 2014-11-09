@@ -3,69 +3,96 @@
 	<div class="col-md-6 pull-right">
 		<h1>{{tour.name}}</h1>
 
-		<p class="tourDetailsPrice">From <span class="lead text-success">NZD${{tour.price}}</span> per person. <br />See dates for specials.</p>
+		<p class="tourDetailsPrice" ng-if="dates">From <span class="lead text-success">NZD${{dates[0].price}}</span> per person. <br />See dates for specials.</p>
 		
-		<p class="tourDetailsShortDesc">{{tour.description}}</p>
+		<p class="tourDetailsShortDesc">{{tour.shortDescription}}</p>
 		
 		<h3 class="text-primary">Book & Check Availability</h3>
-
-		<!-- BOOKING FORM START -->
-		<form name="bookDateForm" ng-submit="submitForm()" novalidate>
 		
-		<div class="tourDetailsDates">
-			<div class="row">
-				<div class="col-md-6">
-					<span class="input-group" >
-						<select name="bookingDate" class="form-control"
-							ng-required="true" 
-							ng-model="bookdate" 
-							ng-options="o as (o | date:'d/MM/yyyy')  for o in test"
-							>
-							<option value="" >Choose a departure date</option>
-						</select>
-						
-						<span class="input-group-btn">
-							<button type="button" class="btn btn-default" ng-click="openCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-						</span>
-					</span>
-					<input type="text" style="visibility:hidden;"
-						ng-model="dt"
-						datepicker-popup="{{format}}" 
-						is-open="opened" 
-						datepicker-options="dateOptions" 
-						date-disabled="disabled(date, mode)"
-						show-button-bar="false" 
-						/>
-					<p ng-show="showErrors && bookDateForm.bookingDate.$invalid" class="help-block">Departure date required.</p>
+		<div ng-if="dates">
+		
+			<!-- BOOKING FORM START -->
+			<form name="bookDateForm" ng-submit="submitForm()" novalidate>
+			
+				<div class="tourDetailsDates">
+					<div class="row">
+						<div class="col-md-6">
+							<span class="input-group" >
+								<select name="bookingDate" class="form-control"
+									ng-required="true" 
+									ng-model="$parent.bookdate" 
+									ng-options="o as (o.departureDate | date:'d MMMM yyyy') for o in dates"
+									>
+									<option value="" disabled>Choose a departure date</option>
+									
+								</select>
+								
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="openCal($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</span>
+							<input type="text" style="visibility:hidden;"
+								ng-model="$parent.dt"
+								datepicker-popup="{{format}}" 
+								is-open="$parent.opened" 
+								datepicker-options="dateOptions" 
+								date-disabled="disabled(date, mode)"
+								show-button-bar="false" 
+								/>
+							<p ng-show="showErrors && bookDateForm.bookingDate.$invalid" class="help-block">Departure date required.</p>
+						</div>
+					</div>
 				</div>
-			</div>
+				<!--<b>{{cart.getTotalCount()}}</b> items-->
+				
+				<div ng-show="bookdate">
+					<h4>Seats available for booking!</h4>
+					<p class="tourDetailsShortDesc">${{bookdate.price}} per passenger.</p>
+				</div>
+				
+				
+				<button type="submit" class="btn btn-primary" >Book now!</button>
+			
+			</form>
+			<!-- BOOKING FORM END -->
+		
+		</div><!-- end ng-if dates -->
+		<div ng-if="!dates">
+			<p>Sorry this tour currently has no available dates to book.</p>
+			<p>If you have a group or would like to organise a date for this trip, please contact us and let us know.</p>
+			<br />
+			<a href="#/contact" class="btn btn-primary">Contact us</a>
 		</div>
-		<!--<b>{{cart.getTotalCount()}}</b> items-->
 		
-		<button type="submit" class="btn btn-primary" >Add booking</button>
-		
-		</form>
-		<!-- BOOKING FORM END -->
 	</div>
 
 	<div class="col-md-6 pull-left">
-		<div class="tourImages">
-			<div class="tourImg" ng-repeat="img in tour.images" ng-class="{active: mainImageUrl==img}">
-				<span class="vAlignHelper"></span><img ng-src="{{img}}" />
+		<div ng-if="images.length>0">
+			<div class="tourImages">
+				<div class="tourImg" ng-repeat="img in images" ng-class="{active: mainImageUrl==img.photo}">
+					<span class="vAlignHelper"></span><img ng-src="http://tomcat-oneninetwo.rhcloud.com/uploads/{{img.photo}}" />
+				</div>
+			</div>
+			<div class="tourThumbs">
+				<ul>
+					<li ng-repeat="img in images">
+						<img ng-src="http://tomcat-oneninetwo.rhcloud.com/uploads/{{img.photo}}" ng-click="setImage(img)" />
+					</li>
+				</ul>
 			</div>
 		</div>
-		<div class="tourThumbs">
-			<ul>
-				<li ng-repeat="img in tour.images">
-					<img ng-src="{{img}}" ng-click="setImage(img)" />
-				</li>
-			</ul>
+		<div ng-show="images.length==null">
+			<div class="tourImages">
+				<img src="assets/img/bus.jpg" alt="" />
+			</div>
 		</div>
+		<!--
 		<div>
 			<button id="" name="" class="btn btn-primary">
 				<span class="glyphicon glyphicon-file"></span>Download Brochure
 			</button>
-		</div>
+		</div> 
+		-->
 	</div>
 
 </div>
@@ -73,13 +100,9 @@
 <div class="row">
 	<div class="col-md-12">
 		<hr />
-		<h2>Full Description</h2>
-		<p>
-		University and inner city park, known as The Domain. Continue on through the picturesque suburb of Ponsonby, known for its historic buildings, before heading over the Harbour Bridge to the North Shore. Take a stroll on Narrow Neck Beach in historic Devonport before continuing up to the summit of Mt Victoria for panoramic views of Auckland city and the Harbour. Next you will visit the beautiful Viaduct Harbour and Westhaven Marina, one of the largest marinas in the Southern Hemisphere, before leaving the city behind and heading west to Kumeu Wine Country where you will enjoy wine tastings followed by lunch at a contemporary vineyard restaurant. Visit Muriwai’s gannet colony where a short walking track leads - See more at: http://www.kirratours.co.nz/all-deals/snapshots-tours/4-day-ultimate-geothermal-snapshots-2/#sthash.bSdopi67.dpuf
-		</p>
-		<h2>Tour Itinerary</h2>
-		<p>
-		University and inner city park, known as The Domain. Continue on through the picturesque suburb of Ponsonby, known for its historic buildings, before heading over the Harbour Bridge to the North Shore. Take a stroll on Narrow Neck Beach in historic Devonport before continuing up to the summit of Mt Victoria for panoramic views of Auckland city and the Harbour. Next you will visit the beautiful Viaduct Harbour and Westhaven Marina, one of the largest marinas in the Southern Hemisphere, before leaving the city behind and heading west to Kumeu Wine Country where you will enjoy wine tastings followed by lunch at a contemporary vineyard restaurant. Visit Muriwai’s gannet colony where a short walking track leads - See more at: http://www.kirratours.co.nz/all-deals/snapshots-tours/4-day-ultimate-geothermal-snapshots-2/#sthash.bSdopi67.dpuf
-		</p>
+		<div class="tourDesc">
+		<h2>Tour Description</h2>
+		<p>{{tour.description}}</p>
+		</div>
 	</div>
 </div>
