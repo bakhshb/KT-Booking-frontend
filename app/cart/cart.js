@@ -220,7 +220,12 @@ angular.module('ktApp.cart', [])
 
     // enable PayPal checkout
     // https://www.paypal.com/webapps/mpp/merchant
-    myCart.addCheckoutParameters("PayPal", "rowanovenden-facilitator@gmail.com");
+    myCart.addCheckoutParameters("PayPal", "rowanovenden-facilitator@gmail.com",
+        {
+            custom: "bookingReferenceIDhere",
+            cancel_return: "http://localhost:8000/app/#/contact"
+        }
+	);
 
     // enable Google Wallet checkout
     // https://developers.google.com/commerce/wallet/digital/training/getting-started/merchant-setup

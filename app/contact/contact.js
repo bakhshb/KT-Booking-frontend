@@ -11,8 +11,8 @@ angular.module('ktApp.contact', [])
 }])
 
 
-.controller('ContactCtrl', ['$scope', 'tours', function($scope, tours) {
+.controller('ContactCtrl', ['$scope', function($scope) {
 
-	$scope.tours = tours.query();
+	//$scope.tours = tours.query();
 
 }]);

@@ -1,55 +1,39 @@
-<div class="container" gallery>
 
 
+<div class="container">
 	<div class="row">
+		<h2>Gallery of KiwianaTour adventures</h2>
+		<br />
+	</div>
+</div>
+
+<div class="container container-md-height galleryCont" gallery infinite-scroll='loadMore()' infinite-scroll-distance='0'>
+
+	<div class="row row-md-height galleryRow" ng-repeat="row in displayImages | pmkr.partition:4">
+		<div class="col-md-3 col-xs-6 col-md-height col-middle galleryCol" ng-repeat="item in row">
+			<a href="gallery/images/{{item.src}}" style="background-image:url('gallery/images/{{item.thumb}}');"></a>
+		</div>
+	</div>
+
+	<!-- example
+	<div class="row row-md-height galleryRow">
 	
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/logo.jpg">
-				<img src="assets/img/logo.jpg" alt="" class="img-responsive" />
-			</a>
+		<div class="col-md-3 col-xs-6 col-md-height col-middle galleryCol">
+			<a href="gallery/images/Small groups -bus.jpg" style="background-image:url('gallery/images/Small groups -bus.jpg');"></a>
 		</div>
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/logo.jpg">
-				<img src="assets/img/logo.jpg" alt="" class="img-responsive" />
-			</a>
+		<div class="col-md-3 col-xs-6 col-md-height col-middle galleryCol">
+			<a href="gallery/images/Snow Mt Ruapehu.jpg" style="background-image:url('gallery/images/Snow Mt Ruapehu.jpg');"></a>
 		</div>
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/banner.jpg">
-				<img src="assets/img/banner.jpg" alt="" class="img-responsive" />
-			</a>
+		<div class="col-md-3 col-xs-6 col-md-height col-middle galleryCol">
+			<a href="gallery/images/South Island West cost beach.jpg" style="background-image:url('gallery/images/South Island West cost beach.jpg');"></a>
 		</div>
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/banner.jpg">
-				<img src="assets/img/logo.jpg" alt="" class="img-responsive" />
-			</a>
+		<div class="col-md-3 col-xs-6 col-md-height col-middle galleryCol">
+			<a href="gallery/images/Tongariro Crossing.jpg" style="background-image:url('gallery/images/Tongariro Crossing.jpg');"></a>
 		</div>
 		
 	</div>
-	
-	<div class="row">
-	
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/logo.jpg">
-				<img src="assets/img/logo.jpg" alt="" class="img-responsive" />
-			</a>
-		</div>
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/logo.jpg">
-				<img src="assets/img/logo.jpg" alt="" class="img-responsive" />
-			</a>
-		</div>
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/banner.jpg">
-				<img src="assets/img/banner.jpg" alt="" class="img-responsive" />
-			</a>
-		</div>
-		<div class="col-md-3 ">
-			<a class="test-popup-link" href="assets/img/banner.jpg">
-				<img src="assets/img/logo.jpg" alt="" class="img-responsive" />
-			</a>
-		</div>
-		
-	</div>
-
+	-->
 
 </div>
+
+<div style="padding-top:80px;"></div>

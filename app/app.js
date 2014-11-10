@@ -14,7 +14,7 @@ angular.module( 'ktApp', [
 ])
 
 
-.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+.config(['$routeProvider', '$locationProvider', '$httpProvider', function ($routeProvider, $locationProvider, $httpProvider) {
 	
 	//$locationProvider.hashPrefix('!');
     $locationProvider.html5Mode(false); //set true take out # from html links
@@ -28,6 +28,11 @@ angular.module( 'ktApp', [
         controller: 'Four04Ctrl'
     })
 	.otherwise({redirectTo:'/404'});
+	
+	//Enable cross domain calls
+	$httpProvider.defaults.useXDomain = true;
+	//Remove the header used to identify ajax call  that would prevent CORS from working
+	delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	
 }])
 

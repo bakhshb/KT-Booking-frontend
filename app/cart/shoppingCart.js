@@ -190,9 +190,13 @@ shoppingCart.prototype.checkoutPayPal = function (parms, clearCart) {
         data["amount_" + ctr] = item.price.toFixed(2);
     }
 
+	//data["custom"] = "http://localhost:8000/app/#/home";
+	//data["cancel_return"] = "http://localhost:8000/app/#/home";
+	//data["notify_url"] = "http://localhost:8000/app/#/home";
+	
     // build form
     var form = $('<form/></form>');
-    form.attr("action", "https://www.paypal.com/cgi-bin/webscr");
+    form.attr("action", "https://www.sandbox.paypal.com/cgi-bin/webscr");
     form.attr("method", "POST");
     form.attr("style", "display:none;");
     this.addFormFields(form, data);
