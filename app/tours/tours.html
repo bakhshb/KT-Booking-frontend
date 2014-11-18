@@ -7,12 +7,12 @@
 			<fieldset>
 
 				<div class="form-group">
-					<label class="col-md-4 control-label" for="">Seach</label>  
+					<label class="col-md-4 control-label" for="">Search</label>
 					<div class="col-md-8">
 						<input id="" name="" placeholder="" class="form-control input-md" type="text" ng-model="query.$">
 					</div>
 				</div>
-
+<!--
 				<hr >
 
 				<div class="form-group">
@@ -46,7 +46,7 @@
 						</select>
 					</div>
 				</div>
-
+-->
 			</fieldset>
 			</form>
 
@@ -63,12 +63,14 @@
 				<li ng-repeat="tour in tours | filter:query | orderBy:orderProperty" class="tourListing">
 					<div class="row tourItem">
 						<div class="col-md-4 col-xs-3">
-							<a href="#/tours/{{tour.id}}" class="thumbnail tourItemThumbnail"><img ng-src="{{tour.imageUrl}}"></a>
+							<div ng-repeat="img in tourimgs" ng-if="img.tour.id==tour.id">
+								<a href="#/tours/{{tour.id}}" class="thumbnail tourItemThumbnail"><img ng-src="http://tomcat-oneninetwo.rhcloud.com/uploads/{{img.photo}}"></a>
+							</div>
 						</div>
 						<div class="col-md-8 col-xs-7">
 							<div class="row"><h3 class="tourItemName"><a href="#/tours/{{tour.id}}">{{tour.name}}</a></h3></div>
-							<div class="row"><span class="tourItemPrice">${{tour.price}}</span></div>
-							<div class="row"><span class="tourItemSnippet">{{tour.snippet}}</span></div>
+							<!--<div class="row"><span class="tourItemPrice">${{tour.price}}</span></div>-->
+							<div class="row"><span class="tourItemSnippet">{{tour.shortDescription}}</span></div>
 							<div class="row"><span class="tourItemControls pull-right">
 								<a href="#/tours/{{tour.id}}" class="btn btn-success">View details and book</a>
 							</span></div>

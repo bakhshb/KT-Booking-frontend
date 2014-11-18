@@ -11,8 +11,6 @@ angular.module('ktApp.home', [])
 }])
 
 
-.controller('HomeCtrl', ['$scope', 'tours', function($scope, tours) {
-
-	//$scope.tours = tours.query();
-
+.controller('HomeCtrl', ['$scope', function($scope) {
+	
 }]);

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="ktApp" ng-controller="MainCtrl">
+<html lang="en" ng-app="ktApp" ng-controller="MainCtrl" ng-init="init()">
 <head>
 	<meta charset="utf-8">
 	<title>KiwianaTours</title>
@@ -10,7 +10,7 @@
 	<link rel="stylesheet" href="assets/css/animations.css">
 	<link rel="stylesheet" href="bower_components/magnific-popup/dist/magnific-popup.css">
 
-	<script src="bower_components/jquery/jquery.js"></script>
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="bower_components/angular-animate/angular-animate.js"></script>
 	<script src="bower_components/angular-route/angular-route.js"></script>
@@ -20,6 +20,10 @@
 	<script src="bower_components/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
 	<script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js"></script>
 	<script src="assets/vendor/bootstrap.js"></script>
+	<script src="assets/vendor/jquery.jcarousel-core.min.js"></script>
+	<script src="assets/vendor/jquery.jcarousel-autoscroll.min.js"></script>
+	<script src="assets/vendor/jquery.tinycarousel.min.js"></script>
+	<script src="assets/vendor/jquery.carouFredSel.js"></script>
 	<script src="app.js"></script>
 	<script src="home/home.js"></script>
 	<script src="about/about.js"></script>
@@ -33,6 +37,7 @@
 	<script src="cart/shoppingCart.js"></script>
 </head>
 <body>
+
 
 	<header class="navbar">
 		<nav class="container" role="navigation">
@@ -64,10 +69,14 @@
 	</header>
 
 	<div class="jumbotron">
-      <div class="container">
-        <p class="bannerText">Get up the moutain this weekend!</p>
-		<p class="bannerText">For only $300</p>
-      </div>
+		<div id="carousel" jcarousel>
+			<div class="slide banner1">
+				<span class="bannerText"><h3>Get up the mountain this weekend!</h3></span>
+			</div>
+			<div class="slide banner2">
+				<span class="bannerText hidden-xs"><h3>Summer is coming! Book Bay of Islands today!</h3></span>
+			</div>
+		</div>
     </div>
 
 	<div class="container bodyContent">

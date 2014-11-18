@@ -1,6 +1,6 @@
 {
   "name": "ktbookingwebsite",
-  "description": "A starter project for AngularJS",
+  "description": "asdas",
   "version": "0.0.0",
   "homepage": "todo",
   "license": "none",
@@ -8,7 +8,7 @@
   "dependencies": {
     "angular": "1.2.x",
     "angular-mocks": "~1.2.x",
-    "jquery": "1.10.2",
+    "jquery": "1.11.1",
     "bootstrap": "~3.1.1",
     "angular-route": "~1.2.x",
     "angular-resource": "~1.2.x",

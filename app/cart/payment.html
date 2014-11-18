@@ -31,7 +31,7 @@
 
     <div class="row">
 		
-		<h2>Payment confirmation</h2>
+		<h2>Payment</h2>
 		
 		<p>You have selected to book {{cart.getTotalCount()}} trips with {{passengers.length}} passenger<span ng-hide="passengers.length<2">s</span></p>
 		<p>Please verify the tours and Departure dates before choosing and proceeding with your payment.</p>
@@ -79,7 +79,7 @@
 	
 	<div class="row" style="padding-top:20px;">
 		<div class="col-md-3 pull-right text-center">
-			<button class="btn-link paymentHover" ng-click="cart.checkout('PayPal', false)">
+			<button class="btn-link paymentHover" ng-click="checkoutPaypal()">
 				<img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" alt="checkout PayPal"/>
 			</button>
 		</div>

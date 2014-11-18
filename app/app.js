@@ -10,7 +10,8 @@ angular.module( 'ktApp', [
 	'ktApp.tourdetails',
 	'ktApp.gallery',
 	'ktApp.contact',
-	'ktApp.cart'
+	'ktApp.cart',
+	'ui.bootstrap'
 ])
 
 
@@ -27,13 +28,27 @@ angular.module( 'ktApp', [
         templateUrl: '404.html',
         controller: 'Four04Ctrl'
     })
-	.otherwise({redirectTo:'/404'});
+	.otherwise({redirectTo:'/home'});
 	
 	//Enable cross domain calls
 	$httpProvider.defaults.useXDomain = true;
 	//Remove the header used to identify ajax call  that would prevent CORS from working
 	delete $httpProvider.defaults.headers.common['X-Requested-With'];
 	
+	
+	//fancy random token
+	function b(a){return a?(a^Math.random()*16>>a/4).toString(16):([1e16]+1e16).replace(/[01]/g,b)}; 
+	
+	$httpProvider.interceptors.push(function() {
+		return {
+			'request': function(config) {
+				// put a new random secret into our CSRF-TOKEN Cookie after each response
+				document.cookie = 'CSRF-TOKEN=' + b();
+				return config;
+			}
+		};
+	});
+
 }])
 
 
@@ -42,22 +57,54 @@ angular.module( 'ktApp', [
 })
 
 
-.controller('MainCtrl', ['$scope', '$location', function($scope, $location) {
+.controller('MainCtrl', ['$scope', '$location', '$http', function($scope, $location, $http) {
+
+	$scope.init = function () {
+		$http.defaults.xsrfHeaderName = 'X-CSRF-TOKEN';
+		$http.defaults.xsrfCookieName = 'CSRF-TOKEN';
+	};
 
 	$scope.isActive = function(route) {
         return route === $location.path();
     };
-	
-	
+  
 	//$location.path('/admin/projects');
 }])
 
 
 .controller('Four04Ctrl', ['$scope', function($scope) {
-
-	
 	
 }])
+
+
+
+.directive('jcarousel', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            $(element).carouFredSel({
+				responsive: true,
+				width: 'auto',
+				items: {
+					visible: 1,
+					start: 0
+				},
+				scroll: {
+					items: 1,
+					duration: 1000,
+					timeoutDuration: 3000
+				},
+				pagination: {
+					container: '#pager',
+					deviation: 1
+				},
+				auto: {
+					timeoutDuration: 5000
+				}
+			});
+        }
+    };
+})
 
 
 

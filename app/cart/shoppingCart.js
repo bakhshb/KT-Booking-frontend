@@ -121,7 +121,7 @@ shoppingCart.prototype.clearItems = function () {
 shoppingCart.prototype.addCheckoutParameters = function (serviceName, merchantID, options) {
 
     // check parameters
-    if (serviceName != "PayPal" && serviceName != "Google" && serviceName != "Stripe") {
+    if (serviceName != "PayPal" && serviceName != "Google" && serviceName != "Stripe" && serviceName != "SuperSecure") {
         throw "serviceName must be 'PayPal' or 'Google' or 'Stripe'.";
     }
     if (merchantID == null) {
@@ -161,10 +161,40 @@ shoppingCart.prototype.checkout = function (serviceName, clearCart) {
         case "Stripe":
             this.checkoutStripe(parms, clearCart);
             break;
+		case "SuperSecure":
+            this.checkoutSuperSecure(parms, clearCart);
+            break;
         default:
             throw "Unknown checkout service: " + parms.serviceName;
     }
 }
+
+
+shoppingCart.prototype.checkoutSuperSecure = function (parms, clearCart) {
+ 
+    var data = {
+		ss_template: "payform.html",
+		ss_account_number: "262eba3",
+		referenceNumber: '16126892114',
+		price: this.getTotalPrice()
+    };
+
+    // build form
+    var form = $('<form/></form>');
+    form.attr("action", "https://supersecure.co.nz/supersecure.php");
+    form.attr("method", "POST");
+	form.attr("enctype", "multipart/form-data");
+    form.attr("style", "display:none;");
+    this.addFormFields(form, data);
+    this.addFormFields(form, parms.options);
+    $("body").append(form);
+
+    // submit form
+    this.clearCart = clearCart == null || clearCart;
+    form.submit();
+    form.remove();
+}
+
 
 // check out using PayPal
 // for details see:

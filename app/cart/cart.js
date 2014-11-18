@@ -4,7 +4,8 @@ angular.module('ktApp.cart', [])
 
 
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/booking/tours', {
+    $routeProvider
+	.when('/booking/tours', {
 		templateUrl: 'cart/cart.html',
 		controller: 'CartCtrl'
 	})
@@ -15,15 +16,27 @@ angular.module('ktApp.cart', [])
 	.when('/booking/payment', {
 		templateUrl: 'cart/payment.html',
 		controller: 'PaymentCtrl'
+	})
+	.when('/booking/confirmation', {
+		templateUrl: 'cart/confirmation.html',
+		controller: 'ConfirmationCtrl'
 	});
 }])
 
 
-.controller('CartCtrl', ['$scope', 'tours', 'CartService', function($scope, tours, CartService) {
+.controller('CartCtrl', ['$scope', 'CartService', function($scope, CartService) {
 
 	$scope.cart = CartService.cart;
 	
 	//$scope.tours = tours.query();
+
+}])
+
+
+.controller('ConfirmationCtrl', ['$scope', 'CartService', function($scope, CartService) {
+
+	//$scope.cart = CartService.cart;
+	
 
 }])
 
@@ -56,21 +69,54 @@ angular.module('ktApp.cart', [])
 	
 	$scope.checkoutSuperSecure = function(){
 		var bookingInfo = {
-			"firstName":"ro",
-			"lastName":"mo",
-			"birthday":514728000000, 
+			"firstName":"rooo2",
+			"lastName":"updates",
+			"birthday": "2007-12-03", 
 			"gender":"Male", 
 			"nationality":"Anguilla", 
 			"email":"qwe@qwe.com", 
 			"contactNo":"0275553855", 
 			"tourSchedule": { 
-				"id":"98306" 
+				"id":"3" 
 			}, 
 			"booking": { 
 				"paymentMethod":"Cash" 
 			} 
 		};
-		tourResources.booking.save(bookingInfo);
+		//tourResources.booking.save(bookingInfo);
+		$scope.cart.checkout('SuperSecure', false);
+	}
+	
+	$scope.checkoutPaypal = function(){
+		var bookingInfo = {};
+		for (var i=0; i<$scope.passengers.length; i++) {
+			//$scope.passengers[i] = $scope.passengers.length;
+			//console.log($scope.passengers[i]);
+			bookingInfo = {
+				"firstName": $scope.passengers[i].fname,
+				"lastName": $scope.passengers[i].lname,
+				"birthday": $scope.passengers[i].dob, 
+				"gender": "Male", 
+				"nationality": $scope.passengers[i].nationality, 
+				"email": $scope.passengers[i].email, 
+				"contactNo": $scope.passengers[i].phone, 
+				"tourSchedule": {
+					"id":"0" 
+				},
+				"booking": {
+					"paymentMethod":"Cash" 
+				}
+			};
+			for (var a=0; a<$scope.cart.items.length; a++) {
+				//console.log($scope.cart.items[a].sku);
+				bookingInfo.tourSchedule.id = $scope.cart.items[a].sku;
+				
+				//tourResources.booking.save(bookingInfo);
+			}
+			//console.log(bookingInfo);
+		}
+		
+		$scope.cart.checkout('PayPal', false);
 	}
 	
 }])
@@ -223,7 +269,17 @@ angular.module('ktApp.cart', [])
     myCart.addCheckoutParameters("PayPal", "rowanovenden-facilitator@gmail.com",
         {
             custom: "bookingReferenceIDhere",
-            cancel_return: "http://localhost:8000/app/#/contact"
+            cancel_return: "http://localhost:8000/app/#/booking/payment",
+			"return": "http://localhost:8000/app/#/booking/confirmation",
+        }
+	);
+	
+	//supersecure
+	//https://supersecure.co.nz/supersecure.php
+	//append template to use onto the url with ?template=example.html
+	myCart.addCheckoutParameters("SuperSecure", "rowanovenden-facilitator@gmail.com",
+        {
+            custom: "bookingReferenceIDhere"
         }
 	);
 
