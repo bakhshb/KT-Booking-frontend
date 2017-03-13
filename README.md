@@ -1,24 +1,3 @@
-# KT BOOKING FRONT END WEBSITE #
+# KT Booking front end website #
 
-Main website for Kiwianatours 
-
-### Setup ###
-
-* run cmd
-* npm install
-* npm start
-
-* run bower if somethings missing
-
-### TODO ###
-
-* SEXY IT UP!
-* Cart
-* CMS?
-* Payment Gateway
-* Put grunt back in
-
-### Contact ###
-
-* Rowan
-* Baraa
+Main website for Kiwianatours allowing customers to view and book tours.
